@@ -142,7 +142,7 @@ module.exports = function(options) {
 	that.pull = function(name, workers, pullOptions, onmessage) {
 		if (typeof workers === 'function') return that.pull(name, options.workers || 1, workers);
 		if (typeof pullOptions === 'function') {
-			onmessage = options;
+			onmessage = pullOptions;
 			pullOptions = null;
 		}
 
