@@ -49,7 +49,7 @@ module.exports = function(options) {
 	var namespace = options.namespace ? options.namespace+'-' : '';
 
 	namespace = namespace.replace(/[^a-zA-Z0-9]/g, '-').replace(/\-+/g, '-');
-	
+
 	request = request.defaults({
 		aws: {
 			key: options.access,
@@ -139,7 +139,12 @@ module.exports = function(options) {
 		if (typeof workers === 'function') return that.pull(name, options.workers || 1, workers);
 		if (typeof pullOptions === 'function') {
 			onmessage = pullOptions;
-			pullOptions = null;
+			if (typeof workers === 'object') {
+				pullOptions = workers;
+				workers = 1
+			} else {
+				pullOptions = null;
+			}
 		}
 
 		name = namespace+name;

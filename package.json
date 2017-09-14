@@ -2,8 +2,11 @@
   "name": "sqs",
   "version": "2.0.2",
   "dependencies": {
-    "request": "~2.75.0",
-    "aws4": "1.6.0"
+    "aws4": "^1.6.0",
+    "crypto": "^1.0.1",
+    "events": "^1.1.1",
+    "querystring": "^0.2.0",
+    "request": "^2.75.0"
   },
   "repository": "git://github.com/mafintosh/sqs",
   "description": "A message queue using Amazon Simple Queue Service.",
