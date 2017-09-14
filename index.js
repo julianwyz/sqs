@@ -139,8 +139,12 @@ module.exports = function(options) {
 
 	var wait = options.wait || 2000;
 
-	that.pull = function(name, workers, onmessage) {
+	that.pull = function(name, workers, options, onmessage) {
 		if (typeof workers === 'function') return that.pull(name, options.workers || 1, workers);
+		if (typeof options === 'function') {
+			onmessage = options;
+			options = null;
+		}
 
 		name = namespace+name;
 
@@ -152,7 +156,10 @@ module.exports = function(options) {
 				if (closed) return;
 
 				queueURL(name, function(url) {
-					req(queryURL('ReceiveMessage', url, {WaitTimeSeconds:20}), function(err, res) {
+					var reqOpts = Object.assign({
+						WaitTimeSeconds: 20
+					}, options ? options : {});
+					req(queryURL('ReceiveMessage', url, reqOpts), function(err, res) {
 						if (err || res.statusCode !== 200) return setTimeout(next, wait);
 
 						var body = text(res.body, 'Body');
